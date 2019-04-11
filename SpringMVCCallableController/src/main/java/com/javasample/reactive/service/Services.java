@@ -1,4 +1,4 @@
-package com.javasampleapproach.callablecontroller.ser;
+package com.javasample.reactive.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,7 @@ public class Services{
 	public String doProcess(String param){
 		// Simulation the slowly process by taking time
 		try{
-			Thread.sleep(2000);	
+			Thread.sleep(1000);	
 			log.info("Thread: " + Thread.currentThread().getName());
 		}catch(Exception e){}
 		

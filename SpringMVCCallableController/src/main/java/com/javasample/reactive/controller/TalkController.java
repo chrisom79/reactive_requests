@@ -1,4 +1,4 @@
-package com.javasampleapproach.callablecontroller.ctr;
+package com.javasample.reactive.controller;
 
 import java.util.Collection;
 import java.util.concurrent.Callable;
@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.javasampleapproach.callablecontroller.ser.Services;
+import com.javasample.reactive.service.Services;
 
-import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -57,17 +54,18 @@ public class TalkController {
 	
 	@RequestMapping("/reactiverequest")
 	private Flux<String> reactive() {
-		//log.info("#ReactiveRequest: Request Received!");
-		//log.info("Thread running: " + Thread.currentThread().getName());
+		log.info("#ReactiveRequest: Request Received!");
+		log.info("Thread running: " + Thread.currentThread().getName());
 		
 		Flux<String> data = Flux.just("Java", "Sample", "Approach", ".com");
 		data
-		.parallel(2)
-		.runOn(Schedulers.parallel())
-		.subscribe(i -> services.doProcess(i));
+			.parallel(2)
+			.runOn(Schedulers.parallel())
+			.subscribe(i -> services.doProcess(i));
 		
+		log.info("#NormalRequest: Request Finish!");
 		return data.cache();
-		//log.info("#NormalRequest: Request Finish!");
+		
 	    
 	}
 	
